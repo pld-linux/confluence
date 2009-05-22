@@ -1,0 +1,16 @@
+*** Confluence Installation Instruction for PLD Linux ***
+
+1. build package:
+
+cd ~/rpm/packages
+cvs up -dP builder confluence
+cd confluence
+../builder -bb confluence
+
+2. install it:
+
+rpm -Uvh rpm/RPMS/confluence*
+
+3. restart tomcat:
+
+service tomcat restart
