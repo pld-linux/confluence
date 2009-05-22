@@ -14,7 +14,8 @@ Source0:	%{name}-%{version}.tar.gz
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
-Source3:	%{name}-README.PLD
+Source3:	%{name}-log4j.properties
+Source4:	%{name}-README.PLD
 URL:		http://www.atlassian.com/software/confluence/
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
@@ -35,7 +36,7 @@ organisation.
 %prep
 %setup -q
 
-cp %{SOURCE3} README.PLD
+cp %{SOURCE4} README.PLD
 
 %build
 CLASSPATH=$(build-classpath-directory lib/endorsed)
@@ -46,22 +47,33 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_datadir},/var/log/%{name}}
 install -d $RPM_BUILD_ROOT%{_sharedstatedir}/%{name}
 cp -a tmp/build/war $RPM_BUILD_ROOT%{_datadir}/%{name}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
 
 # configuration
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/confluence,%{_sharedstatedir}/tomcat/conf/Catalina/localhost}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_sharedstatedir}/tomcat/conf/Catalina/localhost}
+
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/confluence-init.properties
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
 
-ln -s %{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml $RPM_BUILD_ROOT%{_sysconfdir}/confluence/tomcat-context.xml
+ln -s %{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
 
-mv $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/log4j.properties $RPM_BUILD_ROOT%{_sysconfdir}/confluence/log4j.properties
-ln -s %{_sysconfdir}/confluence/log4j.properties $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/log4j.properties
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+ln -s %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
 
-mv $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/confluence-init.properties $RPM_BUILD_ROOT%{_sysconfdir}/confluence/confluence-init.properties
-ln -s %{_sysconfdir}/confluence/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/confluence-init.properties
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
+ln -s %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
 
-mv $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/atlassian-user.xml $RPM_BUILD_ROOT%{_sysconfdir}/confluence/atlassian-user.xml
-ln -s %{_sysconfdir}/confluence/atlassian-user.xml $RPM_BUILD_ROOT%{_datadir}/confluence/WEB-INF/classes/atlassian-user.xml
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+ln -s %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j-diagnostic.properties
+ln -s %{_sysconfdir}/%{name}/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/osuser.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/osuser.xml
+ln -s %{_sysconfdir}/%{name}/osuser.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/osuser.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/atlassian-user.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/atlassian-user.xml
+ln -s %{_sysconfdir}/%{name}/atlassian-user.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/atlassian-user.xml
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -72,11 +84,13 @@ rm -rf $RPM_BUILD_ROOT
 # undeploy this app via tomcat manager.
 %{_datadir}/confluence
 %dir %{_sysconfdir}/confluence
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/confluence/log4j.properties
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/confluence/confluence-init.properties
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/confluence/atlassian-user.xml
-%{_sysconfdir}/confluence/tomcat-context.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j.properties
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/confluence-init.properties
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/atlassian-user.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/osuser.xml
+%{_sysconfdir}/%{name}/tomcat-context.xml
 %config(noreplace) %verify(not md5 mtime size) %attr(2775,root,tomcat) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
-%doc README.PLD
+%doc README.PLD licenses
