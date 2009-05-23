@@ -57,14 +57,9 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
 
 ln -s %{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
 
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
-ln -s %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
-
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
-ln -s %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
-
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
-ln -s %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+ln -sf %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
+ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j-diagnostic.properties
 ln -s %{_sysconfdir}/%{name}/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic
@@ -80,9 +75,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-# do not make this file writeable by tomcat. We do not want to allow user to
-# undeploy this app via tomcat manager.
-%{_datadir}/confluence
 %dir %{_sysconfdir}/confluence
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j.properties
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
@@ -90,6 +82,10 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/atlassian-user.xml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/osuser.xml
 %{_sysconfdir}/%{name}/tomcat-context.xml
+
+# do not make this file writeable by tomcat. We do not want to undeploy this app via tomcat manager.
+%{_datadir}/confluence
+
 %config(noreplace) %verify(not md5 mtime size) %attr(2775,root,tomcat) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
