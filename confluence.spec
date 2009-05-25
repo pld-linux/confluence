@@ -4,7 +4,7 @@
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	2.10.3
-Release:	0.2
+Release:	0.3
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
@@ -77,16 +77,16 @@ mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-paths.xml $RPM_BUIL
 ln -s %{_sysconfdir}/%{name}/seraph-paths.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-paths.xml
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/decorators.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/decorators.xml
-ln -s %{_sysconfdir}/%{name}/decorators.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/decorators.xml
+ln -s %{_sysconfdir}/%{name}/decorators.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/decorators.xml
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/glue-config.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/glue-config.xml
-ln -s %{_sysconfdir}/%{name}/glue-config.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/glue-config.xml
+ln -s %{_sysconfdir}/%{name}/glue-config.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/glue-config.xml
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/urlrewrite.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/urlrewrite.xml
-ln -s %{_sysconfdir}/%{name}/urlrewrite.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/urlrewrite.xml
+ln -s %{_sysconfdir}/%{name}/urlrewrite.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/urlrewrite.xml
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/web.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/web.xml
-ln -s %{_sysconfdir}/%{name}/web.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/web.xml
+ln -s %{_sysconfdir}/%{name}/web.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/web.xml
 
 %clean
 rm -rf $RPM_BUILD_ROOT
