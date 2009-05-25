@@ -4,7 +4,7 @@
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	2.10.3
-Release:	0.1
+Release:	0.2
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
@@ -70,6 +70,24 @@ ln -s %{_sysconfdir}/%{name}/osuser.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-I
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/atlassian-user.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/atlassian-user.xml
 ln -s %{_sysconfdir}/%{name}/atlassian-user.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/atlassian-user.xml
 
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-config.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/seraph-config.xml
+ln -s %{_sysconfdir}/%{name}/seraph-config.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-config.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-paths.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/seraph-paths.xml
+ln -s %{_sysconfdir}/%{name}/seraph-paths.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/seraph-paths.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/decorators.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/decorators.xml
+ln -s %{_sysconfdir}/%{name}/decorators.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/decorators.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/glue-config.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/glue-config.xml
+ln -s %{_sysconfdir}/%{name}/glue-config.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/glue-config.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/urlrewrite.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/urlrewrite.xml
+ln -s %{_sysconfdir}/%{name}/urlrewrite.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/urlrewrite.xml
+
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/web.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/web.xml
+ln -s %{_sysconfdir}/%{name}/web.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/web.xml
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -81,6 +99,12 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/confluence-init.properties
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/atlassian-user.xml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/osuser.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/seraph-config.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/seraph-paths.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/decorators.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/glue-config.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/urlrewrite.xml
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/web.xml
 %{_sysconfdir}/%{name}/tomcat-context.xml
 
 # do not make this file writeable by tomcat. We do not want to undeploy this app via tomcat manager.
