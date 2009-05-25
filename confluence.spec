@@ -16,6 +16,10 @@ Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
 Source3:	%{name}-log4j.properties
 Source4:	%{name}-README.PLD
+# http://confluence.atlassian.com/download/attachments/173229/confluence-pl_PL-plugin-1.0.jar
+Source5:	confluence-pl_PL-plugin-1.0.jar
+# NoSource5-md5:	b8d219e791a536fd98b1a717747e55bc
+NoSource:	5
 URL:		http://www.atlassian.com/software/confluence/
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
@@ -32,6 +36,17 @@ documents and rich content with your team.
 If you're looking for a better way to collaborate or a replacement for an
 open-source wiki, Confluence has the essential enterprise features for your
 organisation. 
+
+%package lang-pl
+Summary:        Polish translation for Confluence
+Summary(pl.UTF-8):      Polskie tłumaczenie Confluence
+Group:          I18n
+
+%description lang-pl
+Polish rtanslation for Confluence.
+
+%description lang-pl -l pl.UTF-8
+Polskie tłumaczenie Confluence.
 
 %prep
 %setup -q
@@ -54,6 +69,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_sharedstatedir}/tomcat/conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/confluence-init.properties
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
+
+install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
 ln -s %{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
 
@@ -109,8 +126,12 @@ rm -rf $RPM_BUILD_ROOT
 
 # do not make this file writeable by tomcat. We do not want to undeploy this app via tomcat manager.
 %{_datadir}/confluence
+%exclude %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
 %config(noreplace) %verify(not md5 mtime size) %attr(2775,root,tomcat) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
 %doc README.PLD licenses
+
+%files lang-pl
+%{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
