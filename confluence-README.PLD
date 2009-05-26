@@ -1,4 +1,4 @@
-*** Confluence Installation Instruction for PLD Linux ***
+*** I. Confluence Installation Instruction for PLD Linux ***
 
 1. build package:
 
@@ -14,3 +14,35 @@ rpm -Uvh rpm/RPMS/confluence*
 3. restart tomcat:
 
 service tomcat restart
+
+*** II. How to customize confluence ***
+
+If you have your own customized version of confluence-%{version}.jar:
+
+1. unjar your version of jar:
+
+mkdir confluence-customized
+cd confluence-customized
+jar xf ../confluence-%{version}.jar
+cd ..
+
+2. unjar official confluence-%{version}.jar
+
+~/rpm/packages/builder -bp confluence
+mkdir confluence
+cd confluence
+jar xf ~/rpm/BUILD/confluence-%{version}/confluence/WEB-INF/lib/confluece-%{version}.jar
+cd ..
+
+3. generate a diff
+
+diff -Naur confluence confluence-customized > ~/rpm/packages/confluence/confluence-customize.patch
+
+4. rebuild confluence
+
+cd ~/rpm/packages
+cvs up -dP builder confluence
+cd confluence
+../builder -bb confluence --with customize
+
+5. GOTO II.2
