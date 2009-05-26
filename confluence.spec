@@ -1,10 +1,16 @@
 # TODO:
 # - ask atlassian for permission to redistribute it.
+# - install more language packs from
+#   http://confluence.atlassian.com/display/DISC/Language+Pack+Translations
+
+# Conditional build
+%bcond_with	customized	# use patch for confluence-%{version}.jar
+
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	2.10.3
-Release:	0.3
+Release:	0.4
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
@@ -21,11 +27,13 @@ Source5:	confluence-pl_PL-plugin-1.0.jar
 # NoSource5-md5:	b8d219e791a536fd98b1a717747e55bc
 NoSource:	5
 URL:		http://www.atlassian.com/software/confluence/
+%{?with_customized:BuildRequires:	jar}
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jpackage-utils
 Requires:	tomcat
+Suggests:	graphviz
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -52,6 +60,15 @@ Polskie tłumaczenie Confluence.
 %setup -q
 
 cp %{SOURCE4} README.PLD
+
+%if %{with customized}
+mkdir work
+mkdir -p edit-webapp/WEB-INF/lib
+cd work
+jar xf ../confluence/WEB-INF/lib/confluence-2.10.3.jar
+patch -p1 < $RPM_SOURCE_DIR/confluence-customize.patch
+jar cf ../edit-webapp/WEB-INF/lib/confluence-2.10.3.jar *
+%endif
 
 %build
 CLASSPATH=$(build-classpath-directory lib/endorsed)
