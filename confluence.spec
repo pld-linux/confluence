@@ -131,19 +131,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%dir %{_sysconfdir}/confluence
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j.properties
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/confluence-init.properties
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/atlassian-user.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/osuser.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/seraph-config.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/seraph-paths.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/decorators.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/glue-config.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/urlrewrite.xml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/web.xml
-%{_sysconfdir}/%{name}/tomcat-context.xml
+%dir %attr(750,root,servlet) %{_sysconfdir}/confluence
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j.properties
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/confluence-init.properties
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/atlassian-user.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/osuser.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/seraph-config.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/seraph-paths.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/decorators.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/glue-config.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/urlrewrite.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/web.xml
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/tomcat-context.xml
 
 # do not make this file writeable by tomcat. We do not want to undeploy this app via tomcat manager.
 %{_datadir}/confluence
