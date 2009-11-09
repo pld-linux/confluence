@@ -6,21 +6,17 @@
 # Conditional build
 %bcond_with	customized	# use patch for confluence-%{version}.jar
 
-%define		ver	3.0.0
-%define		subver	01
-%define		pkgver	%{ver}_%{subver}
-
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
-Version:	%{ver}.%{subver}
+Version:	3.0.2
 Release:	0.1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
-# http://www.atlassian.com/software/confluence/downloads/binary/confluence-%{pkgver}.tar.gz
-Source0:	%{name}-%{pkgver}.tar.gz
-# NoSource0-md5:	34de311ef91764c3cb8833f503fe8497
+# http://www.atlassian.com/software/confluence/downloads/binary/confluence-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar.gz
+# NoSource0-md5:	954b71929bbd44a970cd2013f2b7c19a
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
@@ -61,7 +57,7 @@ Polish rtanslation for Confluence.
 Polskie tłumaczenie Confluence.
 
 %prep
-%setup -q -n confluence-%{pkgver}
+%setup -q -n confluence-%{version}
 
 cp %{SOURCE4} README.PLD
 
@@ -69,9 +65,9 @@ cp %{SOURCE4} README.PLD
 mkdir work
 mkdir -p edit-webapp/WEB-INF/lib
 cd work
-jar xf ../confluence/WEB-INF/lib/confluence-%{pkgver}.jar
+jar xf ../confluence/WEB-INF/lib/confluence-%{version}.jar
 patch -p1 < $RPM_SOURCE_DIR/confluence-customize.patch
-jar cf ../edit-webapp/WEB-INF/lib/confluence-%{pkgver}.jar *
+jar cf ../edit-webapp/WEB-INF/lib/confluence-%{version}.jar *
 %endif
 
 %build
