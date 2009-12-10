@@ -83,13 +83,13 @@ cp -a tmp/build/war $RPM_BUILD_ROOT%{_datadir}/%{name}
 # configuration
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_sharedstatedir}/tomcat/conf/Catalina/localhost}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/confluence/tomcat-context.xml
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/confluence-init.properties
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
 
 install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
-ln -s %{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
+ln -s %{_sysconfdir}/%{name}/tomcat-context.xml $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml
 
 ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
 ln -sf %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
@@ -127,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README.PLD licenses
 %dir %attr(750,root,servlet) %{_sysconfdir}/confluence
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j.properties
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
@@ -141,14 +142,12 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/web.xml
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/tomcat-context.xml
 
-# do not make this file writeable by tomcat. We do not want to undeploy this app via tomcat manager.
 %{_datadir}/confluence
 %exclude %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
-%config(noreplace) %verify(not md5 mtime size) %attr(2775,root,tomcat) %{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
+%{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
-%doc README.PLD licenses
 
 %files lang-pl
 %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
