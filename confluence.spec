@@ -9,14 +9,14 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
-Version:	3.0.2
+Version:	3.1
 Release:	0.1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
 # http://www.atlassian.com/software/confluence/downloads/binary/confluence-%{version}.tar.gz
 Source0:	%{name}-%{version}.tar.gz
-# NoSource0-md5:	954b71929bbd44a970cd2013f2b7c19a
+# NoSource0-md5:	29b7e2e0c00f10ea18998797a3c91190
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
