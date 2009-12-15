@@ -10,7 +10,7 @@
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	3.1
-Release:	0.1
+Release:	1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 # You can download it from:
