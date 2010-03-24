@@ -30,7 +30,7 @@ URL:		http://www.atlassian.com/software/confluence/
 %{?with_customized:BuildRequires:	jar}
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
-BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	rpmbuild(macros) >= 1.546
 Requires:	jpackage-utils
 Requires:	tomcat
 Suggests:	graphviz
@@ -81,9 +81,11 @@ install -d $RPM_BUILD_ROOT%{_sharedstatedir}/%{name}
 cp -a tmp/build/war $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # configuration
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_sharedstatedir}/tomcat/conf/Catalina/localhost}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_tomcatconfdir}}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/confluence/tomcat-context.xml
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
+ln -sf %{_sysconfdir}/%{name}/tomcat-context.xml $RPM_BUILD_ROOT%{_tomcatconfdir}/%{name}.xml
+
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/confluence-init.properties
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
 
@@ -122,6 +124,9 @@ ln -s %{_sysconfdir}/%{name}/urlrewrite.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/W
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/web.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/web.xml
 ln -s %{_sysconfdir}/%{name}/web.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/web.xml
 
+%postun
+%tomcat_clear_cache %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -145,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/confluence
 %exclude %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
-%{_sharedstatedir}/tomcat/conf/Catalina/localhost/confluence.xml
+%{_tomcatconfdir}/%{name}.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
 
