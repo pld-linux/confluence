@@ -15,7 +15,17 @@ rpm -Uvh rpm/RPMS/confluence*
 
 service tomcat restart
 
-*** II. How to customize confluence ***
+*** II. Known problems ***
+
+1. Pull-down menus (like "Browse") don't work.
+
+If you are running both JIRA and Confluence in same tomcat (or other
+atlassian apps) you may encounter a problem with pull-down menus in
+confluence. See here:
+http://confluence.atlassian.com/pages/viewpage.action?pageId=208962752
+Workaround described in comments works for me.
+
+*** III. How to customize confluence ***
 
 If you have your own customized version of confluence-%{version}.jar:
 

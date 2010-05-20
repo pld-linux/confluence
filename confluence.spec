@@ -2,6 +2,7 @@
 # - ask atlassian for permission to redistribute it.
 # - install more language packs from
 #   http://confluence.atlassian.com/display/DISC/Language+Pack+Translations
+# - some workaround for pull-down menu problem (see README.PLD)
 
 # Conditional build
 %bcond_with	customized	# use patch for confluence-%{version}.jar
