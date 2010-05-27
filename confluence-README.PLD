@@ -55,4 +55,4 @@ cvs up -dP builder confluence
 cd confluence
 ../builder -bb confluence --with customize
 
-5. GOTO II.2
+5. GOTO III.2
