@@ -1,26 +1,7 @@
 # TODO:
+# - ask atlassian for permission to redistribute it.
 # - install more language packs from
 #   http://confluence.atlassian.com/display/DISC/Language+Pack+Translations
-# - some workaround for pull-down menu problem (see README.PLD)
-
-# NOTE:
-# Do not remove NoSource tags. Make sure DistFiles won't fetch Confluence sources.
-#
-# Todd Revolt from Atlassian told that:
-#   * We are free to integrate Atlassian products into PLD. So we can write
-#     installer scripts, create nosrc packages etc.
-#   * We are not permitted to redistribute their products. That mean during
-#     installation each user has to download Confluence from atlassian web
-#     page.
-#
-# See Atlassian_EULA_3.0.pdf for more details.
-
-%if 0
-# Download sources manually:
-wget -c http://www.atlassian.com/software/confluence/downloads/binary/confluence-3.2.1_01.tar.gz
-wget -c http://confluence.atlassian.com/download/attachments/173229/confluence-pl_PL-plugin-1.0.jar
-wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
-%endif
 
 # Conditional build
 %bcond_with	customized	# use patch for confluence-%{version}.jar
@@ -28,23 +9,23 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
-Version:	3.2.1_01
+Version:	3.1
 Release:	1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
+# You can download it from:
+# http://www.atlassian.com/software/confluence/downloads/binary/confluence-%{version}.tar.gz
 Source0:	%{name}-%{version}.tar.gz
-# NoSource0-md5:	9914fb296bf201b2ffd78a62dadcedeb
+# NoSource0-md5:	29b7e2e0c00f10ea18998797a3c91190
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
 Source3:	%{name}-log4j.properties
 Source4:	%{name}-README.PLD
+# http://confluence.atlassian.com/download/attachments/173229/confluence-pl_PL-plugin-1.0.jar
 Source5:	confluence-pl_PL-plugin-1.0.jar
 # NoSource5-md5:	b8d219e791a536fd98b1a717747e55bc
 NoSource:	5
-Source6:	Atlassian_EULA_3.0.pdf
-# NoSource6-md5:	9e87088024e3c5ee2e63a72a3e99a6cb
-NoSource:	6
 URL:		http://www.atlassian.com/software/confluence/
 %{?with_customized:BuildRequires:	jar}
 BuildRequires:	jpackage-utils
@@ -79,7 +60,6 @@ Polskie tłumaczenie Confluence.
 %setup -q -n confluence-%{version}
 
 cp %{SOURCE4} README.PLD
-cp %{SOURCE6} .
 
 %if %{with customized}
 mkdir work
@@ -107,12 +87,15 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/tomcat-context.xml
 ln -sf %{_sysconfdir}/%{name}/tomcat-context.xml $RPM_BUILD_ROOT%{_tomcatconfdir}/%{name}.xml
 
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/confluence-init.properties
-ln -sf %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
-
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j.properties
-ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
 
 install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
+
+ln -s %{_sysconfdir}/%{name}/tomcat-context.xml $RPM_BUILD_ROOT%{_sharedstatedir}/tomcat/conf/Catalina/localhost/%{name}.xml
+
+ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
+ln -sf %{_sysconfdir}/%{name}/confluence-init.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/confluence-init.properties
+ln -sf %{_sysconfdir}/%{name}/log4j.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j.properties
 
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/log4j-diagnostic.properties
 ln -s %{_sysconfdir}/%{name}/log4j-diagnostic.properties $RPM_BUILD_ROOT%{_datadir}/%{name}/WEB-INF/classes/log4j-diagnostic
@@ -149,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.PLD licenses Atlassian_EULA_3.0.pdf
+%doc README.PLD licenses
 %dir %attr(750,root,servlet) %{_sysconfdir}/confluence
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j.properties
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,servlet) %{_sysconfdir}/%{name}/log4j-diagnostic.properties
