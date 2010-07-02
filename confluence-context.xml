@@ -18,4 +18,19 @@
       validationQuery="select 1" />
     -->
 
+    <!-- Example mail session definition for Confluence. You can refer it in
+        confluence configuration as JNDI: java:comp/env/mail/ConfluenceMS
+
+        Alternatively you can configure mail server via web interface.
+
+        TODO: how to specify SMTP username and password here?
+    -->
+
+  <!--
+
+    <Resource name="mail/ConfluenceMS" auth="Container" type="javax.mail.Session"
+        mail.smtp.host="smtp.example.net" />
+
+    -->
+
 </Context>
