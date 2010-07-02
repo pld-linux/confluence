@@ -29,7 +29,7 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	3.2.1_01
-Release:	1
+Release:	2
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 Source0:	%{name}-%{version}.tar.gz
@@ -51,7 +51,7 @@ BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.546
 Requires:	jpackage-utils
-Requires:	tomcat
+Requires:	tomcat >= 6.0.26-8
 Suggests:	graphviz
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
