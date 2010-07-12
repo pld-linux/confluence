@@ -15,6 +15,9 @@
 #
 # See Atlassian_EULA_3.0.pdf for more details.
 
+# RELEASE INFO:
+# This version of confluence was released 06 Jul 2010
+
 %if 0
 # Download sources manually:
 wget -c http://www.atlassian.com/software/confluence/downloads/binary/confluence-3.3.tar.gz
@@ -39,7 +42,7 @@ Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
 Source3:	%{name}-log4j.properties
 Source4:	%{name}-README.PLD
-Source5:	confluence-pl_PL-plugin-1.0.jar
+Source5:	%{name}-pl_PL-plugin-1.0.jar
 # NoSource5-md5:	b8d219e791a536fd98b1a717747e55bc
 NoSource:	5
 Source6:	Atlassian_EULA_3.0.pdf
@@ -57,17 +60,17 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Confluence is a simple, powerful wiki that lets you create and share pages,
-documents and rich content with your team.
+Confluence is a simple, powerful wiki that lets you create and share
+pages, documents and rich content with your team.
 
-If you're looking for a better way to collaborate or a replacement for an
-open-source wiki, Confluence has the essential enterprise features for your
-organisation. 
+If you're looking for a better way to collaborate or a replacement for
+an open-source wiki, Confluence has the essential enterprise features
+for your organisation.
 
 %package lang-pl
-Summary:        Polish translation for Confluence
-Summary(pl.UTF-8):      Polskie tłumaczenie Confluence
-Group:          I18n
+Summary:	Polish translation for Confluence
+Summary(pl.UTF-8):	Polskie tłumaczenie Confluence
+Group:		I18n
 
 %description lang-pl
 Polish rtanslation for Confluence.
@@ -76,7 +79,7 @@ Polish rtanslation for Confluence.
 Polskie tłumaczenie Confluence.
 
 %prep
-%setup -q -n confluence-%{version}
+%setup -q
 
 cp %{SOURCE4} README.PLD
 cp %{SOURCE6} .
@@ -172,4 +175,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(2775,root,servlet) %dir /var/log/confluence
 
 %files lang-pl
+%defattr(644,root,root,755)
 %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
