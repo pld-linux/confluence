@@ -23,6 +23,7 @@
 wget -c http://www.atlassian.com/software/confluence/downloads/binary/confluence-3.2.1_01.tar.gz
 wget -c http://confluence.atlassian.com/download/attachments/173229/confluence-pl_PL-plugin-1.0.jar
 wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
+wget -c http://jira.atlassian.com/secure/attachment/38779/confluence-flyingpdf-plugin-1.8.jar
 %endif
 
 # Conditional build
@@ -32,7 +33,7 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	3.2.1_01
-Release:	2
+Release:	3
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 Source0:	%{name}-%{version}.tar.gz
@@ -48,6 +49,10 @@ NoSource:	5
 Source6:	Atlassian_EULA_3.0.pdf
 # NoSource6-md5:	9e87088024e3c5ee2e63a72a3e99a6cb
 NoSource:	6
+# http://jira.atlassian.com/browse/CONF-18704
+Source7:	confluence-flyingpdf-plugin-1.8.jar
+# NoSource7-md5:	410480cc0323bad045788442bd8a819a
+NoSource:	7
 URL:		http://www.atlassian.com/software/confluence/
 %{?with_customized:BuildRequires:	jar}
 BuildRequires:	jpackage-utils
@@ -83,6 +88,7 @@ Polskie tłumaczenie Confluence.
 
 cp %{SOURCE4} README.PLD
 cp %{SOURCE6} .
+cp %{SOURCE7} confluence/WEB-INF/lib
 
 %if %{with customized}
 mkdir work
