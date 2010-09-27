@@ -16,11 +16,11 @@
 # See Atlassian_EULA_3.0.pdf for more details.
 
 # RELEASE INFO:
-# This version of confluence was released on the 17th September 2010
+# This version of confluence was released on the 21th September 2010
 
 %if 0
 # Download sources manually:
-wget -c http://www.atlassian.com/software/confluence/downloads/binary/confluence-3.3.1.tar.gz
+wget -c http://www.atlassian.com/software/confluence/downloads/binary/confluence-3.3.3.tar.gz
 wget -c http://confluence.atlassian.com/download/attachments/173229/confluence-pl_PL-plugin-1.0.jar
 wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 %endif
@@ -31,12 +31,12 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
-Version:	3.3.1
+Version:	3.3.3
 Release:	1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 Source0:	%{name}-%{version}.tar.gz
-# NoSource0-md5:	9b9da9b22893cea7157adc9e36199fa7
+# NoSource0-md5:	ba77782c1ed268df57a6158b01344932
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
