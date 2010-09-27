@@ -16,7 +16,7 @@
 # See Atlassian_EULA_3.0.pdf for more details.
 
 # RELEASE INFO:
-# This version of confluence was released on the 21th September 2010
+# This version of confluence was released on the 21st September 2010
 
 %if 0
 # Download sources manually:
