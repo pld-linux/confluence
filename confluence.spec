@@ -170,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/confluence
 %exclude %{_datadir}/confluence/WEB-INF/lib/confluence-pl_PL-plugin-1.0.jar
 
-%{_tomcatconfdir}/%{name}.xml
+%config(missingok) %{_tomcatconfdir}/%{name}.xml
 %attr(2775,root,servlet) %dir %{_sharedstatedir}/confluence
 %attr(2775,root,servlet) %dir /var/log/confluence
 
