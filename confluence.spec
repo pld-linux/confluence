@@ -31,12 +31,12 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 %include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
-Version:	3.3.3
+Version:	3.4.3
 Release:	1
 License:	Proprietary, not distributable
 Group:		Networking/Daemons/Java/Servlets
 Source0:	%{name}-%{version}.tar.gz
-# NoSource0-md5:	ba77782c1ed268df57a6158b01344932
+# NoSource0-md5:	3ed77fbdc17c0cee41795d4fff7fa27b
 NoSource:	0
 Source1:	%{name}-context.xml
 Source2:	%{name}-init.properties
