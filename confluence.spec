@@ -28,7 +28,6 @@ wget -c http://www.atlassian.com/about/licensing/Atlassian_EULA_3.0.pdf
 # Conditional build
 %bcond_with	customized	# use patch for confluence-%{version}.jar
 
-%include	/usr/lib/rpm/macros.java
 Summary:	Confluence - Enterprise wiki
 Name:		confluence
 Version:	3.4.6
